@@ -11,30 +11,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password_user = htmlspecialchars($_POST['password_user']);
 
     require 'Database.php';
-
     $database = new Database();
 
-    $query = <<<QUERY
-            SELECT * FROM user WHERE username = '$username' AND password_user = '$password_user' LIMIT 1
-        QUERY;
-
+    $query = "SELECT * FROM user WHERE username = '$username' AND password_user = '$password_user' LIMIT 1";
     $user = $database->koneksi->query($query)->fetch();
 
     if (!$user) {
-        echo '<script>
-            alert("Nama atau Password salah!");
-            window.location.href = "login.php";
-        </script>';
+        echo '<script>alert("Nama atau Password salah!"); window.location.href = "login.php";</script>';
+        exit;
     }
 
     $_SESSION['id_user'] = $user['id_user'];
     $_SESSION['username'] = $user['username'];
     $_SESSION['role'] = $user['role'];
+    $_SESSION['foto'] = $user['foto'];
 
-    echo '<script>
-          alert("Berhasil login!");
-          window.location.href = "index.php";
-        </script>';
+    echo '<script>alert("Berhasil login!"); window.location.href = "index.php";</script>';
     exit;
 }
 ?>
