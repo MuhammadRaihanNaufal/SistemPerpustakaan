@@ -10,7 +10,8 @@ include 'koneksi.php';
 $id_user = $_SESSION['id_user'];
 $query = mysqli_query($koneksi, "SELECT * FROM user WHERE id_user = '$id_user'");
 $user = mysqli_fetch_assoc($query);
-$foto = !empty($user['foto']) ? "img/" . $user['foto'] : 'adminlogo.png';
+$foto = !empty($user['foto']) ? $user['foto'] : 'adminlogo.png';
+
 
 ?>
 

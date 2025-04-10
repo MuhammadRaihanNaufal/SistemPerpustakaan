@@ -32,7 +32,7 @@ $buku_terbaru = $database->koneksi
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#">PERPUSTAKAAN</a>
+            <a class="navbar-brand fw-bold">PERPUSTAKAAN</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -48,7 +48,7 @@ $buku_terbaru = $database->koneksi
                             <a class="nav-link" href="listpeminjaman.php">Buku-ku</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="logout.php">Logout</a>
+                            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</a>
                         </li>
                     <?php else : ?>
                         <li class="nav-item">
@@ -92,6 +92,25 @@ $buku_terbaru = $database->koneksi
             <?php endforeach; ?>
         </div>
     </div>
+
+    <div class="modal fade" id="logoutModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Keluar dari akun?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Klik logout untuk keluar dari sesi.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <a class="btn btn-primary" href="logout.php">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script src="../bootstrap/js/bootstrap.bundle.js"></script>
 </body>
