@@ -6,13 +6,11 @@ if (!isset($_SESSION['username'])) {
 }
 include 'koneksi.php';
 
-// Ambil data user saat ini
+// Ambil data user untuk profil
 $id_user = $_SESSION['id_user'];
 $query = mysqli_query($koneksi, "SELECT * FROM user WHERE id_user = '$id_user'");
 $user = mysqli_fetch_assoc($query);
 $foto = !empty($user['foto']) ? $user['foto'] : 'adminlogo.png';
-
-
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +18,7 @@ $foto = !empty($user['foto']) ? $user['foto'] : 'adminlogo.png';
 
 <head>
     <meta charset="utf-8">
-    <title>TABEL BUKU</title>
+    <title>DATA MEMBER</title>
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/9043/9043296.png" type="image/x-icon">
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -29,12 +27,13 @@ $foto = !empty($user['foto']) ? $user['foto'] : 'adminlogo.png';
 
 <body id="page-top">
     <div id="wrapper">
+        <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center">
                 <div class="sidebar-brand-text mx-3">ADMIN</div>
             </a>
             <hr class="sidebar-divider">
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="tableBuku.php">
                     <i class="fas fa-book"></i>
                     <span>Buku</span>
@@ -46,10 +45,11 @@ $foto = !empty($user['foto']) ? $user['foto'] : 'adminlogo.png';
                     <span>Member</span>
                 </a>
             </li>
-
         </ul>
+
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
+                <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown no-arrow">
@@ -76,53 +76,46 @@ $foto = !empty($user['foto']) ? $user['foto'] : 'adminlogo.png';
                     </ul>
                 </nav>
 
+                <!-- Content -->
                 <div class="container-fluid">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h2 class="mb-2 text-dark" style="font-weight: bold;">DATA BUKU</h2>
+                            <h2 class="mb-2 text-dark font-weight-bold">DATA PEMINJAM</h2>
                         </div>
                         <div class="card-body">
-                            <a href="InputBuku.php" class="btn btn-primary shadow mb-4">+ Tambah</a>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover" id="dataTable">
                                     <thead>
                                         <tr>
                                             <th>No.</th>
-                                            <th>Cover</th>
-                                            <th>Kode Buku</th>
-                                            <th>Kategori</th>
+                                            <th>Nama</th>
                                             <th>Judul Buku</th>
-                                            <th>Pengarang</th>
-                                            <th>Penerbit</th>
-                                            <th>Tanggal Masuk</th>
-                                            <th>Tahun Terbit</th>
-                                            <th>Jumlah</th>
+                                            <th>Tanggal Pinjam</th>
+                                            <th>Batas Pengembalian</th>
                                             <th>Status</th>
-                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
                                         $no = 1;
-                                        $tampil = mysqli_query($koneksi, "SELECT * FROM buku");
-                                        while ($d = mysqli_fetch_array($tampil)) :
+                                        $result = mysqli_query($koneksi, "SELECT * FROM peminjaman WHERE status = 'dipinjam'");
+                                        while ($row = mysqli_fetch_assoc($result)) :
+                                            $tanggal_pinjam = new DateTime($row['tanggal_peminjaman']);
+                                            $batas_kembali = clone $tanggal_pinjam;
+                                            $batas_kembali->modify('+' . $row['durasi_pinjam'] . ' days');
                                         ?>
                                             <tr>
                                                 <td><?= $no++ ?></td>
-                                                <td><img src="<?= $d['cover_buku']; ?>" width="80" height="120"></td>
-                                                <td><?= $d['kode_buku'] ?></td>
-                                                <td><?= $d['kategori_buku'] ?></td>
-                                                <td><?= $d['judul_buku'] ?></td>
-                                                <td><?= $d['pengarang'] ?></td>
-                                                <td><?= $d['penerbit'] ?></td>
-                                                <td><?= $d['tanggal_masuk'] ?></td>
-                                                <td><?= $d['tahun_terbit'] ?></td>
-                                                <td><?= $d['jumlah'] ?></td>
-                                                <td><?= $d['status_buku'] ?></td>
-                                                <td>
-                                                    <a href="formEditBuku.php?kode_buku=<?= $d['kode_buku']; ?>" class="mb-2 btn btn-warning text-xs">Edit</a>
-                                                    <a href="deleteAksi.php?kode_buku=<?= $d['kode_buku']; ?>" class="btn btn-danger text-xs">Hapus</a>
-                                                </td>
+                                                <td><?= htmlspecialchars($row['username']) ?></td>
+                                                <td><?= htmlspecialchars($row['judul_buku']) ?></td>
+                                                <td><?= $tanggal_pinjam->format('Y-m-d') ?></td>
+                                                <td><?= $batas_kembali->format('Y-m-d') ?></td>
+                                                <?php
+                                                $today = new DateTime(); // tanggal hari ini
+                                                $status = ($today > $batas_kembali) ? 'Terlambat' : 'Sedang Dipinjam';
+                                                $warna = ($status == 'Sudah Dikembalikan') ? 'danger' : 'success';
+                                                ?>
+                                                <td><span class="badge badge-<?= $warna ?>"><?= $status ?></span></td>
                                             </tr>
                                         <?php endwhile; ?>
                                     </tbody>
@@ -132,6 +125,7 @@ $foto = !empty($user['foto']) ? $user['foto'] : 'adminlogo.png';
                     </div>
                 </div>
 
+                <!-- Footer -->
                 <footer class="sticky-footer bg-white">
                     <div class="container my-auto text-center">
                         <span>Muhammad Raihan Naufal &copy; 2024</span>
@@ -141,7 +135,7 @@ $foto = !empty($user['foto']) ? $user['foto'] : 'adminlogo.png';
         </div>
     </div>
 
-    <!-- Modal Logout -->
+    <!-- Logout Modal -->
     <div class="modal fade" id="logoutModal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -158,6 +152,7 @@ $foto = !empty($user['foto']) ? $user['foto'] : 'adminlogo.png';
         </div>
     </div>
 
+    <!-- Scripts -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
