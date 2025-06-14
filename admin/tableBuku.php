@@ -43,7 +43,7 @@ $foto = !empty($user['foto']) ? $user['foto'] : 'adminlogo.png';
             <li class="nav-item active">
                 <a class="nav-link" href="tableMember.php">
                     <i class="fas fa-users"></i>
-                    <span>Member</span>
+                    <span>Peminjam</span>
                 </a>
             </li>
 
@@ -134,7 +134,7 @@ $foto = !empty($user['foto']) ? $user['foto'] : 'adminlogo.png';
 
                 <footer class="sticky-footer bg-white">
                     <div class="container my-auto text-center">
-                        <span>Muhammad Raihan Naufal &copy; 2024</span>
+                        <span>Muhammad Raihan Naufal &copy; 2025</span>
                     </div>
                 </footer>
             </div>

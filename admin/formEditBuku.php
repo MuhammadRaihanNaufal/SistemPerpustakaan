@@ -207,7 +207,7 @@ $foto = !empty($user['foto']) ? $user['foto'] : 'adminlogo.png';
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Muhammad Raihan Naufal &copy; 2024 </span>
+                        <span>Muhammad Raihan Naufal &copy; 2025 </span>
                     </div>
                 </div>
             </footer>

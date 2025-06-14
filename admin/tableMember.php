@@ -18,7 +18,7 @@ $foto = !empty($user['foto']) ? $user['foto'] : 'adminlogo.png';
 
 <head>
     <meta charset="utf-8">
-    <title>DATA MEMBER</title>
+    <title>TABEL PEMINJAM</title>
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/9043/9043296.png" type="image/x-icon">
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -42,7 +42,7 @@ $foto = !empty($user['foto']) ? $user['foto'] : 'adminlogo.png';
             <li class="nav-item active">
                 <a class="nav-link" href="tableMember.php">
                     <i class="fas fa-users"></i>
-                    <span>Member</span>
+                    <span>Peminjam</span>
                 </a>
             </li>
         </ul>
@@ -128,7 +128,7 @@ $foto = !empty($user['foto']) ? $user['foto'] : 'adminlogo.png';
                 <!-- Footer -->
                 <footer class="sticky-footer bg-white">
                     <div class="container my-auto text-center">
-                        <span>Muhammad Raihan Naufal &copy; 2024</span>
+                        <span>Muhammad Raihan Naufal &copy; 2025</span>
                     </div>
                 </footer>
             </div>
