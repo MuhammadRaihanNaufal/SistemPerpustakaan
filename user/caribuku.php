@@ -29,7 +29,7 @@ $buku_dicari = $koneksi->query($sql)->fetch_all(MYSQLI_ASSOC);
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="#">PERPUSTAKAAN</a>
+      <a class="navbar-brand fw-bold" href="#">PERPUSTAKAAN ONLINE</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
