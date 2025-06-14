@@ -112,7 +112,7 @@ $foto = !empty($user['foto']) ? $user['foto'] : 'adminlogo.png';
                                                 <td><?= $batas_kembali->format('Y-m-d') ?></td>
                                                 <?php
                                                 $today = new DateTime(); // tanggal hari ini
-                                                $status = ($today > $batas_kembali) ? 'Terlambat' : 'Sedang Dipinjam';
+                                                $status = ($today > $batas_kembali) ? 'Sudah Dikembalikan' : 'Sedang Dipinjam';
                                                 $warna = ($status == 'Sudah Dikembalikan') ? 'danger' : 'success';
                                                 ?>
                                                 <td><span class="badge badge-<?= $warna ?>"><?= $status ?></span></td>
