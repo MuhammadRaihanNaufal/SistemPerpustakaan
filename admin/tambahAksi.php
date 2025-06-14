@@ -47,4 +47,3 @@ if (mysqli_query($koneksi, $sql)) {
     window.location.href = "InputBuku.php";
     </script>';
 }
-?>
