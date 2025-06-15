@@ -22,6 +22,32 @@ $foto = !empty($user['foto']) ? $user['foto'] : 'adminlogo.png';
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/9043/9043296.png" type="image/x-icon">
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+        }
+
+        #wrapper {
+            min-height: 100vh;
+            /* penting: agar wrapper mengisi seluruh tinggi layar */
+        }
+
+        #content-wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        #content {
+            flex: 1;
+        }
+
+        .sticky-footer {
+            margin-top: auto;
+        }
+    </style>
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 
@@ -98,11 +124,13 @@ $foto = !empty($user['foto']) ? $user['foto'] : 'adminlogo.png';
                                     <tbody>
                                         <?php
                                         $no = 1;
-                                        $result = mysqli_query($koneksi, "SELECT * FROM peminjaman WHERE status = 'dipinjam'");
+                                        $result = mysqli_query($koneksi, "SELECT * FROM peminjaman");
                                         while ($row = mysqli_fetch_assoc($result)) :
                                             $tanggal_pinjam = new DateTime($row['tanggal_peminjaman']);
                                             $batas_kembali = clone $tanggal_pinjam;
                                             $batas_kembali->modify('+' . $row['durasi_pinjam'] . ' days');
+                                            $status = $row['status'];
+                                            $warna = ($status == 'Dikembalikan') ? 'success' : 'danger';
                                         ?>
                                             <tr>
                                                 <td><?= $no++ ?></td>
@@ -110,15 +138,11 @@ $foto = !empty($user['foto']) ? $user['foto'] : 'adminlogo.png';
                                                 <td><?= htmlspecialchars($row['judul_buku']) ?></td>
                                                 <td><?= $tanggal_pinjam->format('Y-m-d') ?></td>
                                                 <td><?= $batas_kembali->format('Y-m-d') ?></td>
-                                                <?php
-                                                $today = new DateTime(); // tanggal hari ini
-                                                $status = ($today > $batas_kembali) ? 'Sudah Dikembalikan' : 'Sedang Dipinjam';
-                                                $warna = ($status == 'Sudah Dikembalikan') ? 'danger' : 'success';
-                                                ?>
                                                 <td><span class="badge badge-<?= $warna ?>"><?= $status ?></span></td>
                                             </tr>
                                         <?php endwhile; ?>
                                     </tbody>
+
                                 </table>
                             </div>
                         </div>
